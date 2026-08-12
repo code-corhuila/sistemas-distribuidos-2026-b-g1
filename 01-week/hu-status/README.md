@@ -46,7 +46,7 @@
 - Defined the initial bounded contexts: Academic Records, Attendance, Notifications, Communication and Identity/Accounts.
 - Defined consistency levels and delivery semantics for the core operations of MVP 1 (grade registration, attendance marking, push notifications, parent-child account sync).
 - Designed an initial Saga/Outbox flow for the "grade published → notification sent" scenario to handle partial failures without losing or duplicating events.
-- Drafted initial user stories with testable acceptance criteria for the selected problem.
+- Drafted functional and non-functional requirements and initial user stories with testable acceptance criteria for the selected problem.
 - Prepared the individual weekly HU-STATUS deliverable in the fork.
 
 ## 3. Blockers and risks
@@ -89,116 +89,65 @@
 - Week 01: https://github.com/XimenaChala/sistemas-distribuidos-2026-b-g1/tree/main/01-week
 - HU-STATUS: https://github.com/XimenaChala/sistemas-distribuidos-2026-b-g1/tree/main/01-week/hu-status
 
-## 7. Unit 1 - Foundations Diagram
+## 7. Problem statement and software requirements (EduTrack)
 
-```mermaid
-flowchart TD
-    A["UNIT 1 · FOUNDATIONS<br/>DISTRIBUTED SYSTEMS"] --> B["1. DISTRIBUTED SYSTEMS"]
+### 7.1 Problem statement
 
-    B --> C["State · Time · Failure"]
-    C --> C1["No shared state"]
-    C --> C2["No global clock"]
-    C --> C3["Independent failures"]
-    C --> C4["8 fallacies"]
+Parents today rely on scattered channels (WhatsApp, email, per-school platforms) to track their children's academic progress. There is no real-time visibility into grades, attendance or teacher communication, and existing platforms (Google Classroom, Moodle) are designed for teachers, not parents. Families with more than one child, or children in different schools, face even greater fragmentation.
 
-    C4 --> D["2. SYSTEM & FAILURE MODELS"]
-    D --> D1["Synchronous / Asynchronous"]
-    D --> D2["Crash-stop"]
-    D --> D3["Crash-recovery"]
-    D --> D4["Omission"]
-    D --> D5["Byzantine"]
+**EduTrack** is a distributed system that centralizes school tracking (assignments, grades, attendance and communication) for parents/guardians, applying DDD, hexagonal architecture and resilience patterns to guarantee consistency under network failures.
 
-    D5 --> E["3. LOGICAL TIME"]
-    E --> E1["Causality"]
-    E --> E2["Happens-before"]
-    E --> E3["Lamport clocks"]
-    E --> E4["Vector clocks"]
+### 7.2 Functional requirements
 
-    E4 --> F["4. CONSISTENCY"]
-    F --> F1["Strong / Linearizable"]
-    F --> F2["Sequential"]
-    F --> F3["Causal"]
-    F --> F4["Eventual"]
-    F --> F5["CAP / PACELC"]
+| ID | Requirement |
+|---|---|
+| RF-01 | The system shall allow parents to view their child's grades in near real time. |
+| RF-02 | The system shall record and display student attendance, including absences and tardiness. |
+| RF-03 | The system shall send push/email notifications to parents for relevant academic events, without duplicating alerts. |
+| RF-04 | The system shall allow a parent account to be linked to multiple children, even across different schools. |
+| RF-05 | The system shall allow direct, subject-scoped messaging between parents and teachers. |
+| RF-06 | The system shall preserve the causal order of attendance events for the same student. |
+| RF-07 | The system shall guarantee that a grade is not lost even if the notification service is unavailable. |
+| RF-08 | The system shall guarantee that a parent-child link is neither duplicated nor lost during account synchronization. |
 
-    F5 --> G["5. REPLICATION & CONSENSUS"]
-    G --> G1["Replication"]
-    G --> G2["Sharding"]
-    G --> G3["Quorum: R + W > N"]
-    G --> G4["Consensus / Raft"]
-    G --> G5["FLP"]
+### 7.3 Non-functional requirements
 
-    G5 --> H["6. COMMUNICATION"]
-    H --> H1["Synchronous"]
-    H --> H2["Asynchronous"]
-    H --> H3["At-most-once"]
-    H --> H4["At-least-once"]
-    H --> H5["Idempotency + Dedup"]
-    H --> H6["Exactly-once processing"]
+| ID | Requirement |
+|---|---|
+| RNF-01 | Consistency: eventual consistency for grades and notifications; causal consistency for attendance; strong/linearizable consistency for identity/account sync. |
+| RNF-02 | Reliability: at-least-once delivery with idempotency keys for grades and attendance; exactly-once for account sync via idempotency + outbox. |
+| RNF-03 | Resilience: the system must apply Circuit Breaker, Retry with backoff, Timeout and Bulkhead to isolate failures between services. |
+| RNF-04 | Availability: a failure in the Notifications service must not block grade or attendance registration (graceful degradation). |
+| RNF-05 | Maintainability: each bounded context must follow hexagonal architecture (domain without I/O) and SOLID principles. |
+| RNF-06 | Testability: unit, integration (Testcontainers), contract and E2E tests are required before a user story is considered done. |
+| RNF-07 | Security: no secrets in code; configuration via environment variables. |
+| RNF-08 | Observability: relevant domain events (grade published, attendance recorded, notification sent/failed) must be traceable end-to-end. |
 
-    H6 --> I["7. DISTRIBUTED FAILURE"]
-    I --> I1["Orders"]
-    I1 --> I2["Reserve Inventory"]
-    I2 --> I3["Charge Payments"]
-    I3 --> I4["Confirm Order"]
-    I3 --> I5["Failure → Compensate → Release Stock"]
-    I4 --> J["SAGA + IDEMPOTENCY"]
+### 7.4 Bounded contexts (DDD)
 
-    J --> K["8. PROFESSIONAL ENGINEERING"]
+| Bounded Context | Responsibility |
+|---|---|
+| Academic Records | Manages assignments and grades |
+| Attendance | Records and tracks student attendance |
+| Notifications | Sends alerts to parents (push, email) |
+| Communication | Direct parent-teacher chat |
+| Identity/Accounts | Manages parent, child and school accounts |
 
-    K --> L["DDD"]
-    L --> L1["Bounded Contexts"]
-    L --> L2["Entities"]
-    L --> L3["Value Objects"]
-    L --> L4["Aggregates"]
-    L --> L5["Domain Events"]
+### 7.5 Core operations — consistency and delivery semantics
 
-    L5 --> M["HEXAGONAL ARCHITECTURE"]
-    M --> M1["Domain"]
-    M --> M2["Application"]
-    M --> M3["Ports"]
-    M --> M4["Adapters"]
-    M4 --> M5["Adapters → Application → Domain"]
+| Operation | Consistency | Delivery semantics | Rationale |
+|---|---|---|---|
+| Register new grade | Eventual | At-least-once + idempotency key | Not critical to the millisecond, but must not be lost |
+| Mark attendance (absence) | Causal | At-least-once + dedup | Order matters: "present" cannot arrive after "absent" for the same day |
+| Send push notification | Eventual | At-most-once | Better to occasionally miss one than to spam duplicates |
+| Sync parent-child account across schools | Strong/Linearizable | Exactly-once (idempotency + outbox) | Critical identity data; must not be duplicated or lost |
 
-    M5 --> N["SOLID + CLEAN CODE"]
-    N --> N1["SRP"]
-    N --> N2["DIP"]
-    N --> N3["OCP / ISP"]
-    N --> N4["Clean Code"]
+### 7.6 MVP 1 scope
 
-    N4 --> O["RESILIENCE"]
-    O --> O1["Circuit Breaker"]
-    O --> O2["Retry + Backoff"]
-    O --> O3["Timeout / Bulkhead"]
-    O --> O4["Saga"]
-    O --> O5["Outbox"]
-    O --> O6["CQRS"]
+**In scope:** grade viewing, attendance tracking, push/email notifications, parent-teacher messaging, multi-child/multi-school accounts.
 
-    O6 --> P["TESTING"]
-    P --> P1["Unit"]
-    P --> P2["Integration"]
-    P --> P3["Contract"]
-    P --> P4["E2E"]
-    P --> P5["Testcontainers"]
+**Out of scope (v2+):** AI-based academic risk prediction, shared academic calendar, automated monthly PDF reports.
 
-    P5 --> Q["SCRUM + GIT + ADR"]
-    Q --> Q1["Weekly Sprints"]
-    Q --> Q2["User Stories"]
-    Q --> Q3["Acceptance Criteria"]
-    Q --> Q4["DoD"]
-    Q --> Q5["develop → qa → main"]
-    Q --> Q6["ADR"]
+## 8. System map
 
-    Q6 --> R["WEEKLY HU-STATUS"]
-    R --> R1["Fork personal"]
-    R --> R2["01-week/hu-status/README.md"]
-    R --> R3["HU + Contribution"]
-    R --> R4["Evidence + Compliance"]
-
-    R4 --> S["FINAL GOAL"]
-    S --> S1["Consistency"]
-    S --> S2["Resilience"]
-    S --> S3["Idempotency"]
-    S --> S4["Testing"]
-    S --> S5["Professional Distributed System"]
-```
+![EduTrack system map](mapa.png)
