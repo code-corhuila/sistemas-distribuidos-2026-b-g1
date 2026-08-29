@@ -33,7 +33,7 @@
   * `GET /api/v1/movies/{id}` (detailed movie record with trailer and poster metadata)
   * `GET /api/v1/showtimes` (query active movie functions by date, theater, or format)
   * `POST /api/v1/movies` (protected administrative endpoint for catalog creation)
-* Established domain business rules to prevent schedule overlapping when assigning showtimes to specific auditoriums.
+* Established domain business rules to prevent schedule overlapping when assigning showtimes to specific auditoriums
 * Structured the microservice architecture following **DDD, TDD, SDD, SOLID, Clean Code, and Hexagonal Architecture**, isolating catalog domain entities from database persistence layers.
 * Drafted initial OpenAPI / Swagger v3 specifications for public catalog consumption.
 
