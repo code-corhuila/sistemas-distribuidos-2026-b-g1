@@ -35,7 +35,7 @@
 
 - Document the platform context and domain terminology in `01-context` and `02-domain` (Ubiquitous Language).
 - Draft and publish the ADR for the 4-API service breakdown in `05-architecture/decisions/records/`.
-- Define initial OpenAPI contracts in `07-api/contracts/openapi/` for inter-service communication.
+- Define initial OpenAPI contracts in `07-api/contracts/openapi/` for inter-service communication
 - Create user stories for the first MVP 1 vertical slice and begin implementation under Hexagonal Architecture.
 
 ## 5. Compliance self-check
