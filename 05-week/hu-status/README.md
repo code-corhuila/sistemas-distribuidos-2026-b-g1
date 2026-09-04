@@ -2,36 +2,34 @@
      Your weekly grade is read AUTOMATICALLY from this file:
        05-week/hu-status/README.md  (inside YOUR fork). English. -->
 
-# Weekly Status - Week 05
+# Weekly Status Report – Week 05
 
-<!-- CONFIG-START - must match your profile repo (username/username) CONFIG -->
-- FULL_NAME:
-- GITHUB_USER:
-- TEAM:
-- SPRINT_GOAL:
-<!-- CONFIG-END -->
+- FULL NAME: Edwin Meléndez Palomino
+- GITHUB USERNAME: [your GitHub username]
+- TEAM: Futbolix
+- SPRINT OBJECTIVE: Complete the MVP documentation and define the project's technology foundation.
 
-## 1. User stories worked this week
-| HU ID | Title | Status (todo/doing/done) | Evidence (PR or commit URL) |
-|---|---|---|---|
-| HU-XXX-001 |  |  |  |
+---
 
-## 2. My individual contribution
--
+## 1. User Stories Worked on This Week
 
-## 3. Blockers and risks
--
+| User Story ID | Title | Status | Evidence |
+|--------------|--------|--------|----------|
+| HU-RES-001 | View Field Availability | Completed | Related PR/Commit |
+| HU-RES-002 | Create Field Reservation | Completed | Related PR/Commit |
+| HU-PAY-001 | Complete Reservation Payment | Completed | Related PR/Commit |
+| HU-NOT-001 | Receive Reservation Confirmation | Completed | Related PR/Commit |
+| HU-RES-003 | Cancel Reservation | Completed | Related PR/Commit |
+| HU-ADM-001 | Manage Fields, Schedules, and Pricing | Completed | Related PR/Commit |
+| HU-01 | Technology Stack Selection | Completed | Related PR/Commit |
 
-## 4. Plan for next week
--
+---
 
-## 5. Compliance self-check
-- [ ] Conventional Commits - `type(scope): summary`
-- [ ] Per-environment HU branch + PR to that environment (hu-xxx-dev -> develop, ...)
-- [ ] Testable acceptance criteria
-- [ ] Tests added/updated (unit / integration)
-- [ ] DDD / hexagonal boundaries respected (domain has no I/O)
-- [ ] No secrets; config via environment variables
+## 2. My Individual Contribution
 
-## 6. Evidence links
--
+- Created the MVP user stories.
+- Defined the functional requirements.
+- Defined the non-functional requirements.
+- Built the traceability matrix.
+- Documented the technology stack selection.
+- Reviewed consistency between the product vision, requirements
