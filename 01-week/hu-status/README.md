@@ -1,4 +1,4 @@
-# Weekly Status - Week 05
+# Weekly Status - Week 01
 
 <!-- CONFIG-START - must match your profile repo (username/username) CONFIG -->
 - FULL_NAME: Ximena Del Pilar Zambrano Chala
