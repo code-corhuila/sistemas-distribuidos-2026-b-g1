@@ -1,4 +1,4 @@
-# Weekly Status - Week 01
+# Weekly Status - Week 05
 
 <!-- CONFIG-START - must match your profile repo (username/username) CONFIG -->
 - FULL_NAME: Ximena Del Pilar Zambrano Chala
@@ -10,7 +10,7 @@
 ## 1. User stories worked this week
 
 | HU ID | Title | Status (todo/doing/done) | Evidence (PR or commit URL) |
-|---|---|---|---|
+|-------|-------|--------------------------|-----------------------------|
 | HU-XXX-001 | Distributed Systems Foundations | done | https://github.com/XimenaChala/sistemas-distribuidos-2026-b-g1 |
 | HU-XXX-002 | Select real problem for MVP 1 (EduTrack) | done | https://github.com/XimenaChala/sistemas-distribuidos-2026-b-g1 |
 | HU-XXX-003 | Define PRD and functional/non-functional requirements | done | https://github.com/XimenaChala/sistemas-distribuidos-2026-b-g1 |
@@ -65,24 +65,3 @@
 - Create the corresponding HU branch and Pull Request.
 - Set up Testcontainers for integration testing.
 - Validate communication between the first integrated modules.
-
-## 5. Compliance self-check
-
-- [x] Conventional Commits - `type(scope): summary`
-- [x] Per-environment HU branch + PR to that environment (hu-xxx-dev -> develop, ...)
-- [x] Testable acceptance criteria
-- [ ] Tests added/updated (unit / integration)
-- [x] DDD / hexagonal boundaries respected (domain has no I/O)
-- [x] No secrets; config via environment variables
-
-## 6. Evidence links
-
-- Repository: https://github.com/XimenaChala/sistemas-distribuidos-2026-b-g1
-- Week 01: https://github.com/XimenaChala/sistemas-distribuidos-2026-b-g1/tree/main/01-week
-- HU-STATUS: https://github.com/XimenaChala/sistemas-distribuidos-2026-b-g1/tree/main/01-week/hu-status
-- EduTrack PRD: https://github.com/XimenaChala/sistemas-distribuidos-2026-b-g1/tree/main/01-week/hu-status
-- EduTrack PDR: https://github.com/XimenaChala/sistemas-distribuidos-2026-b-g1/tree/main/01-week/hu-status
-
-## 7. System map
-
-![EduTrack system map](mapa.png)
