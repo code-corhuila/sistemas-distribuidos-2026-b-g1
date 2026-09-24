@@ -5,33 +5,35 @@
 # Weekly Status - Week 08
 
 <!-- CONFIG-START - must match your profile repo (username/username) CONFIG -->
-- FULL_NAME:
-- GITHUB_USER:
-- TEAM:
-- SPRINT_GOAL:
+- FULL_NAME: Edwin Meléndez Palomino
+- GITHUB_USER: emelendez20201-ship-it
+- TEAM: Futbolix
+- SPRINT_GOAL: Improve UML documentation consistency, address review findings, align architecture artifacts with API contracts, and prepare the project for the microservices documentation phase.
 <!-- CONFIG-END -->
 
 ## 1. User stories worked this week
+
 | HU ID | Title | Status (todo/doing/done) | Evidence (PR or commit URL) |
 |---|---|---|---|
-| HU-XXX-001 |  |  |  |
+| HU-RES-001 | View Field Availability | done | https://github.com/code-corhuila/ftx-docs/pull/20 |
+| HU-RES-002 | Create Field Reservation | done | https://github.com/code-corhuila/ftx-docs/pull/20 |
+| HU-PAY-001 | Complete Reservation Payment | doing | https://github.com/code-corhuila/ftx-docs/pull/20 |
+| HU-NOT-001 | Receive Reservation Confirmation | doing | https://github.com/code-corhuila/ftx-docs/pull/20 |
+| HU-ADM-001 | Manage Fields, Schedules, Availability, and Pricing | doing | https://github.com/code-corhuila/ftx-docs/pull/20 |
 
 ## 2. My individual contribution
--
+
+- Reviewed the findings received in the UML documentation pull request.
+- Renamed the official container diagram from `c2-container-diagram.puml` to `c4-container-diagram.puml`.
+- Standardized service naming from **User Service** to **Auth Service** to keep consistency with API contracts and authentication documentation.
+- Updated UML references across architecture documentation.
+- Reviewed the relationship between architecture diagrams and OpenAPI contracts.
+- Clarified the PostgreSQL architecture used for the MVP.
+- Improved consistency between UML diagrams, requirements, architecture, and API documentation.
+- Updated the diagram registry documentation and added clarification regarding implemented vs. planned diagrams.
+- Reviewed repository structure and traceability between documentation artifacts.
 
 ## 3. Blockers and risks
--
 
-## 4. Plan for next week
--
-
-## 5. Compliance self-check
-- [ ] Conventional Commits - `type(scope): summary`
-- [ ] Per-environment HU branch + PR to that environment (hu-xxx-dev -> develop, ...)
-- [ ] Testable acceptance criteria
-- [ ] Tests added/updated (unit / integration)
-- [ ] DDD / hexagonal boundaries respected (domain has no I/O)
-- [ ] No secrets; config via environment variables
-
-## 6. Evidence links
--
+- Some planned UML diagrams are not yet implemented.
+- Authentication-related documentation still requires
