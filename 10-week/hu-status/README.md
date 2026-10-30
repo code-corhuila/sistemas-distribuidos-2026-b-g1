@@ -1,37 +1,46 @@
-<!-- HU-STATUS TEMPLATE - do NOT remove the <!-- ... --> markers or the table headers.
-     Your weekly grade is read AUTOMATICALLY from this file:
-       10-week/hu-status/README.md  (inside YOUR fork). English. -->
+# Weekly Status - Week 10 (Release Corte 2 / MVP 2)
 
-# Weekly Status - Week 10
+**Full Name:** Ximena Del Pilar Zambrano Chala  
+**Role:** Tech Lead / Frontend & Infrastructure Architect  
+**Status:** MVP 2 Shipped & Tagged `v2.0.0`
 
-<!-- CONFIG-START - must match your profile repo (username/username) CONFIG -->
-- FULL_NAME:
-- GITHUB_USER:
-- TEAM:
-- SPRINT_GOAL:
-<!-- CONFIG-END -->
+---
 
-## 1. User stories worked this week
-| HU ID | Title | Status (todo/doing/done) | Evidence (PR or commit URL) |
-|---|---|---|---|
-| HU-XXX-001 |  |  |  |
+## 1. User Stories & Core Epics (Historias de Usuario)
+- **[HU-004-COMMS]** Arquitectura y subida del servicio `educk-communication-api` adaptado a persistencia documental MongoDB (Anexo J).
+- **[HU-INFRA-002]** Aislamiento estricto de PostgreSQL multi-esquema (`identity_schema`, `academic_schema`, `attendance`) en una única instancia (`educk-infra`) con usuarios de aplicación sin privilegios administrativos.
+- **[HU-REL-001]** Empaque, versionamiento semántico y publicación de tags oficiales `v2.0.0` en los 20 repositorios de la organización.
+- **[HU-GOV-001]** Gobernanza estricta Git-Flow por ambiente (`develop` -> `qa` -> `release.2.x.x` -> `main`) mediante promociones exclusivas con `git cherry-pick -x <commit-id>`.
+- **[HU-CI-003]** Hardening y límites de consumo en GitHub Actions (`concurrency: cancel-in-progress: true`, `timeout-minutes: 10`, filtro `develop`/`qa`).
 
-## 2. My individual contribution
--
+---
 
-## 3. Blockers and risks
--
+## 2. PRs & Commits (Evidencia de Contribución Individual)
+### Backend & Infraestructura:
+* **educk-communication-api:** 
+  - [PR #3](https://github.com/code-corhuila/educk-communication-api/pull/3) - `feat(communication): integrate MongoDB repository adapter and REST endpoints` (393 lines, Clean Code, Hexagonal Architecture)
+  - [PR #4](https://github.com/code-corhuila/educk-communication-api/pull/4) - `chore(deploy): add containerization Dockerfile and Compose service`
+  - [PR #5](https://github.com/code-corhuila/educk-communication-api/pull/5) - `qa(communication): promote HU-004 pure domain, MongoDB persistence and compose service to QA` (Cherry-pick `-x`)
+  - **Tag `v2.0.0`** publicado en GitHub.
+* **educk-infra:**
+  - [PR #12](https://github.com/code-corhuila/educk-infra/pull/12) - `fix(infra): enforce Annex J instance and domain isolation`
+  - [PR #13](https://github.com/code-corhuila/educk-infra/pull/13) - `fix(infra): restore Redis, RabbitMQ services and integrate communication-api in compose`
+  - **Tag `v2.0.0`** publicado en GitHub.
+* **educk-academic-portal:**
+  - [PR #12](https://github.com/code-corhuila/educk-academic-portal/pull/12) - `Release 2.x.x: Final integration for Academic API and UI`
+  - [Release v2.0.0](https://github.com/code-corhuila/educk-academic-portal/releases/tag/v2.0.0) en `main`.
+* **educk-attendance-portal:**
+  - [PR #13](https://github.com/code-corhuila/educk-attendance-portal/pull/13) - `Release 2.x.x: Final integration for Attendance API`
+  - [Release v2.0.0](https://github.com/code-corhuila/educk-attendance-portal/releases/tag/v2.0.0) en `main`.
+* **educk-docs:**
+  - [PR #57](https://github.com/code-corhuila/educk-docs/pull/57) - `docs(release): distinguish verified MVP 2 progress from delivery gates`
+  - [PR #59](https://github.com/code-corhuila/educk-docs/pull/59) - `docs(architecture): clarify Annex J runtime verification`
+  - **release.md** con inventario completo de commits y tags de los 20 repositorios.
 
-## 4. Plan for next week
--
+---
 
-## 5. Compliance self-check
-- [ ] Conventional Commits - `type(scope): summary`
-- [ ] Per-environment HU branch + PR to that environment (hu-xxx-dev -> develop, ...)
-- [ ] Testable acceptance criteria
-- [ ] Tests added/updated (unit / integration)
-- [ ] DDD / hexagonal boundaries respected (domain has no I/O)
-- [ ] No secrets; config via environment variables
-
-## 6. Evidence links
--
+## 3. Ceremonias de Scrum y Flujo de Trabajo
+- **Sprint Planning:** Definición del alcance del MVP 2 y asignación de tareas Anexo J.
+- **Daily Standups:** Monitoreo del estado de Postgres, MongoDB y portales en Docker.
+- **Sprint Review & Demo:** Preparación de la sustentación de 8 minutos y verificación de degradación elegante (Graceful Degradation) ante caída inducida de servicios.
+- **Sprint Retrospective:** Validación del cumplimiento de los Quality Gates (< 400 líneas por PR, Conventional Commits en inglés con `Why:`).
