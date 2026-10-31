@@ -1,0 +1,53 @@
+# Proposal for the Futbolix pipeline (Java 21 / Spring Boot services).
+# In a service repository it lives in .github/workflows/security.yml
+name: security
+
+on:
+  pull_request:
+    branches: [develop, qa, main]
+
+concurrency:
+  group: security-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  secret-scan:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Secret scan (gitleaks)
+        uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  dependency-audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+          cache: maven
+      - name: Dependency audit (OWASP dependency-check, fail on CVSS >= 7)
+        working-directory: court-service
+        run: mvn -B org.owasp:dependency-check-maven:10.0.4:check -DfailBuildOnCVSS=7
+
+  authorization-tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    needs: [secret-scan]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+          cache: maven
+      - name: Negative authorization test (issue #52)
+        working-directory: court-service
+        run: mvn -B test -Dtest=AdminCourtAuthorizationTest
