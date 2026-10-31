@@ -48,6 +48,6 @@ jobs:
           distribution: temurin
           java-version: '21'
           cache: maven
-      - name: Negative authorization test (issue #52)
+      - name: "Negative authorization test (issue #52)"
         working-directory: court-service
         run: mvn -B test -Dtest=AdminCourtAuthorizationTest
